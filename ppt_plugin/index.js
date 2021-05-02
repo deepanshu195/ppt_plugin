@@ -38,25 +38,22 @@ function addSlide() {
   let ppt_side_body_node = ourdoc.getElementById(
     "ppt_main_body_slide_thumbnail"
   );
-  ppt_side_body_node.addEventListener("click", (e) => {
-    console.log(e.target.id);
+  let slideTemplate = basicSlideTemplate();
+  slideTemplate.addEventListener("click", (e) => {
+    e.preventDefault();
     showSlide(e.target.id);
   });
-  let slideTemplate = basicSlideTemplate();
+
   ppt_side_body_node.append(slideTemplate);
   if (!isAnyActiveSlide) {
     showSlide(slideTemplate.id);
     isAnyActiveSlide = true;
-    // console.log("inside", isAnyActiveSlide);
-    // ppt_main_body_node.append(slideTemplate.cloneNode(true));
   }
 }
 
 function showSlide(id) {
   activeThumbnailId = id;
-  console.log("showSlide called", id);
   let getSelectedNode = ourdoc.getElementById(id).cloneNode(true);
-  console.log(getSelectedNode);
   if (activeMainSlideId) {
     ourdoc.getElementById(activeMainSlideId).remove();
   }
@@ -70,6 +67,7 @@ function showSlide(id) {
   getSelectedNode.contentEditable = true;
   activeMainSlideId = getSelectedNode.id;
   ppt_main_body_node.append(getSelectedNode);
+  getSelectedNode.addEventListener("focusout",()=>{saveClicked()})
 }
 
 function saveClicked() {
@@ -98,7 +96,6 @@ function createPpt(args) {
   iframeTemplate.onload = function () {
     ourdoc = iframeTemplate.contentDocument;
     basicTemplate();
-
     ourdoc.addEventListener(
       "keydown",
       (e) => {
@@ -109,7 +106,6 @@ function createPpt(args) {
           e.preventDefault();
           saveClicked();
           // Process the event here (such as click on submit button)
-          console.log("control and save clicked.");
         }
       },
       false
