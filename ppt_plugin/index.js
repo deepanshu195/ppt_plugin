@@ -64,16 +64,55 @@ function showSlide(id) {
   getSelectedNode.style.margin = "auto";
   getSelectedNode.style.marginTop = "20px";
   getSelectedNode.style.marginBottom = "20px";
-  getSelectedNode.contentEditable = true;
+  // getSelectedNode.contentEditable = true;
+  let d = document.createElement("div");
+  d.draggable = true;
+  d.classList.add("resizable");
+
+  getSelectedNode.appendChild(d);
   activeMainSlideId = getSelectedNode.id;
   ppt_main_body_node.append(getSelectedNode);
-  getSelectedNode.addEventListener("focusout",()=>{saveClicked()})
+  getSelectedNode.addEventListener("focusout", () => {
+    saveClicked();
+  });
+
+  let mousePressed = false;
+  ourdoc
+    .getElementById(activeMainSlideId)
+    .addEventListener("mousemove", (e) => {
+      e.preventDefault();
+      if (mousePressed) {
+        console.log(getSelectedNode.offsetLeft, "offset", e.clientX);
+        let top = `${Math.abs(e.clientY)}px`;
+        let left = `${Math.abs(e.clientX)}px`;
+        console.log("left", left, "top", top);
+        d.style.top = top;
+        d.style.left = left;
+      }
+    });
+
+  d.addEventListener("mousedown", (e) => {
+    console.log("clientX", e.clientX, e.clientY);
+    console.log("offset", d.offsetTop, d.offsetLeft, d.offsetParent);
+
+    console.log(
+      "offset",
+      getSelectedNode.offsetTop,
+      getSelectedNode.offsetLeft,
+      getSelectedNode.offsetParent
+    );
+
+    e.preventDefault();
+    mousePressed = true;
+    console.log("mousedown");
+  });
+  ourdoc.onmouseup = function () {
+    mousePressed = false;
+    console.log("mouse up");
+  };
 }
 
 function saveClicked() {
-  console.log(ourdoc.getElementById(activeThumbnailId));
-  console.log(ourdoc.getElementById(activeMainSlideId));
-
   ourdoc.getElementById(activeThumbnailId).innerHTML = ourdoc
     .getElementById(activeMainSlideId)
     .cloneNode(true).innerHTML;

@@ -22,3 +22,19 @@ body {
   padding: 10px;
   border-radius: 2px;
 }
+
+[draggable="true"] {
+  cursor: move;
+}
+
+.resizable {
+  overflow: scroll;
+  position: absolute;
+  resize: both;
+  max-width: 300px;
+  max-height: 460px;
+  border: 1px solid black;
+  min-width: 50px;
+  min-height: 50px;
+  background-color: skyblue;
+}
