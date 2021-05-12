@@ -3,6 +3,7 @@ const schema = require("../schema/schema");
 const merge = require("../helper/merge");
 const schemaStyle = require("../schema/schemaStyle");
 const slideOps = require("../slideOps/slideOps");
+const createNode = require("../createNode/drawDiv");
 
 function createPpt(args) {
   let { docId, style } = args;
@@ -24,6 +25,8 @@ function createPpt(args) {
   );
 
   basicTemplate();
+
+  createNode(document.getElementById("ppt_main_body_slide"));
 
   document.addEventListener(
     "keydown",
