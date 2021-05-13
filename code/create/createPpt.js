@@ -3,6 +3,9 @@ const schema = require("../schema/schema");
 const merge = require("../helper/merge");
 const schemaStyle = require("../schema/schemaStyle");
 const slideOps = require("../slideOps/slideOps");
+let ppt_main_body = "ppt_main_body";
+
+let {createTray} = require("../tableTray/index")
 
 function createPpt(args) {
   let { docId, style } = args;
@@ -10,14 +13,16 @@ function createPpt(args) {
   document.getElementById(docId).innerHTML = schema;
   css(
     document.getElementById(docId),
-    merge({ width: "500px", "border-radius": "5px", height: "700px" }, style)
+    merge({ width: "1200px", "border-radius": "5px", height: "700px" }, style)
+  );
+  let main_node = document.getElementById(ppt_main_body);
+  css(main_node, schemaStyle.ppt_main_body);
+  main_node.appendChild(createTray());
+  css(
+    document.getElementById("ppt_main_body_thumbnails"),
+    schemaStyle.ppt_main_body_thumbnails
   );
 
-  css(document.getElementById("ppt_main_body"), schemaStyle.ppt_main_body);
-  css(
-    document.getElementById("ppt_main_body_slide_thumbnail"),
-    schemaStyle.ppt_main_body_slide_thumbnail
-  );
   css(
     document.getElementById("ppt_main_body_slide"),
     schemaStyle.ppt_main_body_slide
