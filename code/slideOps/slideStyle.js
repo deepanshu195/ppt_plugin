@@ -17,5 +17,6 @@ module.exports = {
     "margin-top": "20px",
     "margin-bottom": "20px",
     zoom: "1",
+    position: "relative",
   },
 };

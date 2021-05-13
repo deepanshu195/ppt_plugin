@@ -6,6 +6,7 @@ const slideOps = require("../slideOps/slideOps");
 let ppt_main_body = "ppt_main_body";
 
 let {createTray} = require("../tableTray/index")
+const createNode = require("../createNode/drawDiv");
 
 function createPpt(args) {
   let { docId, style } = args;
@@ -29,6 +30,8 @@ function createPpt(args) {
   );
 
   basicTemplate();
+
+  createNode(document.getElementById("ppt_main_body_slide"));
 
   document.addEventListener(
     "keydown",
