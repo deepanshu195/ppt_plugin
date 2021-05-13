@@ -15,5 +15,6 @@ module.exports = {
     margin: "auto",
     "margin-top": "20px",
     "margin-bottom": "20px",
+    position: "relative",
   },
 };

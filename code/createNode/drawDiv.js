@@ -10,17 +10,20 @@ function initDraw(canvas) {
   };
   var element = null;
   function setMousePosition(e) {
-    mouse.x = e.pageX;
-    mouse.y = e.pageY;
+    mouse.x = e.pageX - canvas.offsetLeft;
+    mouse.y = e.pageY - canvas.offsetTop;
+    document.getElementById(
+      "infoBox"
+    ).innerHTML = `x : ${mouse.x} , y : ${mouse.y}`;
   }
   canvas.onmousedown = function (e) {
-    mouse.startX = e.pageX;
-    mouse.startY = e.pageY;
+    mouse.startX = e.pageX - canvas.offsetLeft;
+    mouse.startY = e.pageY - canvas.offsetTop;
     element = document.createElement("div");
     css(element, divStyle.createRectangle);
     element.style.left = mouse.startX + "px";
     element.style.top = mouse.startY + "px";
-    canvas.appendChild(element);
+    canvas.append(element);
     canvas.style.cursor = "crosshair";
   };
   canvas.onmousemove = function (e) {
@@ -38,6 +41,14 @@ function initDraw(canvas) {
       canvas.style.cursor = "default";
     }
   };
+  var infoBox = document.createElement("div");
+  infoBox.style.width = "100px";
+  infoBox.style.width = "100px";
+  infoBox.style.border = "1px solid blue";
+  infoBox.style.textAlign = "center";
+  infoBox.style.position = "absolute";
+  infoBox.setAttribute("id", "infoBox");
+  document.body.appendChild(infoBox);
 }
 
 module.exports = initDraw;
